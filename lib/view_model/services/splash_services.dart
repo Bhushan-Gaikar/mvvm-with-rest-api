@@ -11,10 +11,10 @@ class SplashServices {
     getUserData().then((value) async{
       if (value.token == null || value.token == '') {
         await Future.delayed(Duration(seconds: 3));
-        Navigator.pushNamed(context, RoutesName.login);
+        Navigator.pushReplacementNamed(context, RoutesName.login);
       } else {
         await Future.delayed(Duration(seconds: 3));
-        Navigator.pushNamed(context, RoutesName.home);
+        Navigator.pushReplacementNamed(context, RoutesName.home);
       }
     }).onError((error, stackTrace) {
       // Handle error

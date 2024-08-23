@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 userPrefernece.remove().then(
                   (value) {
-                    Navigator.pushNamed(context, RoutesName.login);
+                    Navigator.pushReplacementNamed(context, RoutesName.login);
                   },
                 );
               },

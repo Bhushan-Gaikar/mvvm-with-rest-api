@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mvvm/res/components/round_button.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/utils/utils.dart';
-import 'package:mvvm/view/home_screen.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -14,10 +13,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   FocusNode emailNode = FocusNode();
   FocusNode passwordNode = FocusNode();
@@ -37,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthViewMode = Provider.of<AuthViewModel>(context);
+    final authViewMode = Provider.of<AuthViewModel>(context);
 
     final height = MediaQuery.of(context).size.height * 1;
 
@@ -45,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text('Login'),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Column(
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: _obsecurePassword.value,
                     obscuringCharacter: "*",
                     decoration: InputDecoration(
-                      icon: Icon(Icons.lock_open_outlined),
+                      icon: const Icon(Icons.lock_open_outlined),
                       labelText: 'Password',
                       hintText: 'Enter Your Password',
                       suffixIcon: InkWell(
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundButton(
               title: 'Login',
-              loading: AuthViewMode.loading,
+              loading: authViewMode.loading,
               onPressed: () {
                 if (_emailController.text.isEmpty) {
                   Utils.flushBarErrorMessage('Please Enter Email', context);
@@ -109,8 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     'email': _emailController.text.toString(),
                     'password': _passwordController.text.toString(),
                   };
-                  AuthViewMode.loginApi(data, context);
-                  print('APi Hit');
+                  authViewMode.loginApi(data, context);
                 }
               },
             ),
@@ -121,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () {
                   Navigator.pushNamed(context, RoutesName.signUp);
                 },
-                child: Text("Don't have an account? Sign Up"))
+                child: const Text("Don't have an account? Sign Up"))
           ],
         ),
       ),
